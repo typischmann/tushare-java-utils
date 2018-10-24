@@ -5,13 +5,13 @@ import com.tushare.constant.stock.ExchangeId;
 import com.tushare.constant.stock.basic.IsHS;
 import com.tushare.constant.stock.basic.ListStatus;
 import com.tushare.constant.stock.calender.TradeCalenderFields;
+import com.tushare.constant.stock.hsconst.HsType;
 import com.tushare.core.impl.DefaultTushareStockDataService;
 import com.tushare.exception.TushareException;
 import org.junit.Test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class TushareStockDataServiceTest {
@@ -61,7 +61,7 @@ public class TushareStockDataServiceTest {
     }
 
     @Test
-    public void stockCompanyTest() throws TushareException, ParseException {
+    public void stockCompanyTest() throws TushareException{
         DefaultTushareStockDataService tushareStockDataService = new DefaultTushareStockDataService(token);
         ApiResponse result = tushareStockDataService.stockCompany();
         StringBuilder fields = new StringBuilder();
@@ -81,9 +81,28 @@ public class TushareStockDataServiceTest {
 
 
     @Test
-    public void nameChangeTest() throws TushareException, ParseException {
+    public void nameChangeTest() throws TushareException{
         DefaultTushareStockDataService tushareStockDataService = new DefaultTushareStockDataService(token);
         ApiResponse result = tushareStockDataService.nameChange("600848.SH",null,null);
+        StringBuilder fields = new StringBuilder();
+        for(String item : result.getFields()){
+            fields.append(item).append("   |   ");
+        }
+        System.out.println(fields.toString());
+
+        for(String[] items  : result.getItems()) {
+            StringBuilder line = new StringBuilder();
+            for(String item : items){
+                line.append(item).append("  |  ");
+            }
+            System.out.println(line.toString());
+        }
+    }
+
+    @Test
+    public void hsConstTest() throws  TushareException{
+        DefaultTushareStockDataService tushareStockDataService = new DefaultTushareStockDataService(token);
+        ApiResponse result = tushareStockDataService.hsConst(HsType.SH, null);
         StringBuilder fields = new StringBuilder();
         for(String item : result.getFields()){
             fields.append(item).append("   |   ");

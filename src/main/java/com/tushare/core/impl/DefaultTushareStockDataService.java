@@ -6,6 +6,7 @@ import com.tushare.constant.TushareApiName;
 import com.tushare.constant.stock.ExchangeId;
 import com.tushare.constant.stock.basic.IsHS;
 import com.tushare.constant.stock.basic.ListStatus;
+import com.tushare.constant.stock.hsconst.HsType;
 import com.tushare.constant.stock.namechange.NameChangeFields;
 import com.tushare.core.api.TushareStockDataService;
 import com.tushare.exception.TushareException;
@@ -140,6 +141,41 @@ public class DefaultTushareStockDataService extends AbstractTushareDataService i
             params.put(NameChangeFields.END_DATE, new SimpleDateFormat("yyyyMMdd").format(endDate));
         }
 
+
+        apiRequest.setParams(params);
+        if(fields != null){
+            apiRequest.setFields(fields);
+        }
+        ApiResponse apiResponse = tushareRequestClient.send(apiRequest, this.url);
+
+        return apiResponse;
+    }
+
+    @Override
+    public ApiResponse hsConst(HsType hsType, Boolean isNew) throws TushareException {
+        return hsConst(hsType, isNew, null);
+    }
+
+    /**
+     * {@inheritDoc}
+     * @param hsType
+     * @param isNew
+     * @param fields
+     * @return
+     * @throws TushareException
+     */
+    @Override
+    public ApiResponse hsConst(HsType hsType, Boolean isNew, List<String> fields) throws TushareException {ApiRequest apiRequest = new ApiRequest();
+        apiRequest.setApiName(TushareApiName.HS_CONST);
+        apiRequest.setToken(this.token);
+        Map<String, String> params = new HashMap<>();
+        if(hsType != null){
+            params.put(HsType.keyName, hsType.getValue());
+        }
+
+        if(isNew != null){
+            params.put("is_new", isNew ? "1" : "0");
+        }
 
         apiRequest.setParams(params);
         if(fields != null){

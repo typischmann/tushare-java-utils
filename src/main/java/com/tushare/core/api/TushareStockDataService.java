@@ -4,6 +4,7 @@ import com.tushare.bean.ApiResponse;
 import com.tushare.constant.stock.ExchangeId;
 import com.tushare.constant.stock.basic.IsHS;
 import com.tushare.constant.stock.basic.ListStatus;
+import com.tushare.constant.stock.hsconst.HsType;
 import com.tushare.exception.TushareException;
 
 import java.util.Date;
@@ -70,14 +71,41 @@ public interface TushareStockDataService {
 
     /**
      *
+     * @param tsCode
+     * @param startDate
+     * @param endDate
      * @return
+     * @throws TushareException
      */
     ApiResponse nameChange(String tsCode, Date startDate, Date endDate)throws TushareException;
 
     /**
      *
+     * @param tsCode
+     * @param startDate
+     * @param endDate
      * @param fields
      * @return
+     * @throws TushareException
      */
     ApiResponse nameChange(String tsCode, Date startDate, Date endDate, List<String> fields)throws TushareException;
+
+    /**
+     *
+     * @param hsType
+     * @param isNew
+     * @return
+     * @throws TushareException
+     */
+    ApiResponse hsConst(HsType hsType, Boolean isNew)throws TushareException;
+
+    /**
+     *
+     * @param hsType
+     * @param isNew
+     * @param fields
+     * @return
+     * @throws TushareException
+     */
+    ApiResponse hsConst(HsType hsType, Boolean isNew, List<String> fields)throws TushareException;
 }
