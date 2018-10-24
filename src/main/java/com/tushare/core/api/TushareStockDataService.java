@@ -54,4 +54,30 @@ public interface TushareStockDataService {
      * @throws TushareException
      */
     ApiResponse tradeCalender(ExchangeId exchangeId, Date startDate, Date endDate, Boolean isOpen, List<String> fields) throws TushareException;
+
+    /**
+     *
+     * @return
+     */
+    ApiResponse stockCompany()throws TushareException;
+
+    /**
+     *
+     * @param fields
+     * @return
+     */
+    ApiResponse stockCompany(List<String> fields)throws TushareException;
+
+    /**
+     *
+     * @return
+     */
+    ApiResponse nameChange(String tsCode, Date startDate, Date endDate)throws TushareException;
+
+    /**
+     *
+     * @param fields
+     * @return
+     */
+    ApiResponse nameChange(String tsCode, Date startDate, Date endDate, List<String> fields)throws TushareException;
 }

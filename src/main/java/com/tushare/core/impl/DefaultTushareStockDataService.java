@@ -6,6 +6,7 @@ import com.tushare.constant.TushareApiName;
 import com.tushare.constant.stock.ExchangeId;
 import com.tushare.constant.stock.basic.IsHS;
 import com.tushare.constant.stock.basic.ListStatus;
+import com.tushare.constant.stock.namechange.NameChangeFields;
 import com.tushare.core.api.TushareStockDataService;
 import com.tushare.exception.TushareException;
 import com.tushare.constant.TushareConstants;
@@ -87,6 +88,58 @@ public class DefaultTushareStockDataService extends AbstractTushareDataService i
         if(isOpen != null){
             params.put("is_open", isOpen ? "1" : "0");
         }
+
+        apiRequest.setParams(params);
+        if(fields != null){
+            apiRequest.setFields(fields);
+        }
+        ApiResponse apiResponse = tushareRequestClient.send(apiRequest, this.url);
+
+        return apiResponse;
+    }
+
+    @Override
+    public ApiResponse stockCompany() throws TushareException{
+        return stockCompany(null);
+    }
+
+    @Override
+    public ApiResponse stockCompany(List<String> fields) throws TushareException{
+        ApiRequest apiRequest = new ApiRequest();
+        apiRequest.setApiName(TushareApiName.STOCK_COMPANY);
+        apiRequest.setToken(this.token);
+
+        if(fields != null){
+            apiRequest.setFields(fields);
+        }
+        ApiResponse apiResponse = tushareRequestClient.send(apiRequest, this.url);
+
+        return apiResponse;
+    }
+
+    @Override
+    public ApiResponse nameChange(String tsCode, Date startDate, Date endDate) throws TushareException {
+        return nameChange(tsCode, startDate, endDate, null);
+    }
+
+    @Override
+    public ApiResponse nameChange(String tsCode, Date startDate, Date endDate, List<String> fields) throws TushareException {
+        ApiRequest apiRequest = new ApiRequest();
+        apiRequest.setApiName(TushareApiName.NAME_CHANGE);
+        apiRequest.setToken(this.token);
+        Map<String, String> params = new HashMap<>();
+        if(tsCode != null){
+            params.put(NameChangeFields.TS_CODE, tsCode);
+        }
+
+        if(startDate != null){
+            params.put(NameChangeFields.START_DATE, new SimpleDateFormat("yyyyMMdd").format(startDate));
+        }
+
+        if(endDate != null){
+            params.put(NameChangeFields.END_DATE, new SimpleDateFormat("yyyyMMdd").format(endDate));
+        }
+
 
         apiRequest.setParams(params);
         if(fields != null){

@@ -59,4 +59,43 @@ public class TushareStockDataServiceTest {
             System.out.println(line.toString());
         }
     }
+
+    @Test
+    public void stockCompanyTest() throws TushareException, ParseException {
+        DefaultTushareStockDataService tushareStockDataService = new DefaultTushareStockDataService(token);
+        ApiResponse result = tushareStockDataService.stockCompany();
+        StringBuilder fields = new StringBuilder();
+        for(String item : result.getFields()){
+            fields.append(item).append("   |   ");
+        }
+        System.out.println(fields.toString());
+
+        for(String[] items  : result.getItems()) {
+            StringBuilder line = new StringBuilder();
+            for(String item : items){
+                line.append(item).append("  |  ");
+            }
+            System.out.println(line.toString());
+        }
+    }
+
+
+    @Test
+    public void nameChangeTest() throws TushareException, ParseException {
+        DefaultTushareStockDataService tushareStockDataService = new DefaultTushareStockDataService(token);
+        ApiResponse result = tushareStockDataService.nameChange("600848.SH",null,null);
+        StringBuilder fields = new StringBuilder();
+        for(String item : result.getFields()){
+            fields.append(item).append("   |   ");
+        }
+        System.out.println(fields.toString());
+
+        for(String[] items  : result.getItems()) {
+            StringBuilder line = new StringBuilder();
+            for(String item : items){
+                line.append(item).append("  |  ");
+            }
+            System.out.println(line.toString());
+        }
+    }
 }
