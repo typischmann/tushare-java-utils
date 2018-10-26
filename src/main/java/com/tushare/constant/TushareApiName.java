@@ -6,4 +6,6 @@ public class TushareApiName {
     public static final String STOCK_COMPANY = "stock_company";
     public static final String NAME_CHANGE = "namechange";
     public static final String HS_CONST = "hs_const";
+    public static final String DAILY = "daily";
+    public static final String PRO_BAR = "pro_bar";
 }

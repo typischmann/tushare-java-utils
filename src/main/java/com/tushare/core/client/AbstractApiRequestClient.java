@@ -40,7 +40,7 @@ public abstract class AbstractApiRequestClient implements ApiRequestClient{
         ApiResponse response = new ApiResponse();
         response.setFields(request.getFields());
         response.setCode(jsonObject.getString(TushareConstants.CODE));
-        response.setCode(jsonObject.getString(TushareConstants.MSG));
+        response.setMsg(jsonObject.getString(TushareConstants.MSG));
 
         if(StringUtils.isNotEmpty(jsonObject.getString(TushareConstants.DATA))){
             JSONObject data = jsonObject.getJSONObject(TushareConstants.DATA);

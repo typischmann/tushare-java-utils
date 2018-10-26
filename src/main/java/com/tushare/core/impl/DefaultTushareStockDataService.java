@@ -1,8 +1,13 @@
 package com.tushare.core.impl;
 
+import com.alibaba.fastjson.JSONArray;
 import com.tushare.bean.ApiRequest;
 import com.tushare.bean.ApiResponse;
 import com.tushare.constant.TushareApiName;
+import com.tushare.constant.market.AdjType;
+import com.tushare.constant.market.AssetType;
+import com.tushare.constant.market.FreqType;
+import com.tushare.constant.market.ProBarFields;
 import com.tushare.constant.stock.ExchangeId;
 import com.tushare.constant.stock.basic.IsHS;
 import com.tushare.constant.stock.basic.ListStatus;
@@ -37,9 +42,6 @@ public class DefaultTushareStockDataService extends AbstractTushareDataService i
 
     @Override
     public ApiResponse stockBasic(IsHS isHS, ListStatus listStatus, ExchangeId exchangeId, List<String> fields) throws TushareException {
-        ApiRequest apiRequest = new ApiRequest();
-        apiRequest.setApiName(TushareApiName.STOCK_BASIC);
-        apiRequest.setToken(this.token);
         Map<String, String> params = new HashMap<>();
         if(isHS != null){
             params.put(IsHS.keyName, isHS.getValue());
@@ -53,11 +55,7 @@ public class DefaultTushareStockDataService extends AbstractTushareDataService i
             params.put(ExchangeId.keyName, exchangeId.getValue());
         }
 
-        apiRequest.setParams(params);
-        if(fields != null){
-            apiRequest.setFields(fields);
-        }
-        ApiResponse apiResponse = tushareRequestClient.send(apiRequest, this.url);
+        ApiResponse apiResponse = query(TushareApiName.STOCK_BASIC, params, fields);
 
         return apiResponse;
     }
@@ -69,10 +67,6 @@ public class DefaultTushareStockDataService extends AbstractTushareDataService i
 
     @Override
     public ApiResponse tradeCalender(ExchangeId exchangeId, Date startDate, Date endDate, Boolean isOpen, List<String> fields) throws TushareException {
-
-        ApiRequest apiRequest = new ApiRequest();
-        apiRequest.setApiName(TushareApiName.TRADE_CALENDER);
-        apiRequest.setToken(this.token);
         Map<String, String> params = new HashMap<>();
         if(exchangeId != null){
             params.put(ExchangeId.keyName, exchangeId.getValue());
@@ -90,11 +84,7 @@ public class DefaultTushareStockDataService extends AbstractTushareDataService i
             params.put("is_open", isOpen ? "1" : "0");
         }
 
-        apiRequest.setParams(params);
-        if(fields != null){
-            apiRequest.setFields(fields);
-        }
-        ApiResponse apiResponse = tushareRequestClient.send(apiRequest, this.url);
+        ApiResponse apiResponse = query(TushareApiName.TRADE_CALENDER, params, fields);
 
         return apiResponse;
     }
@@ -106,14 +96,8 @@ public class DefaultTushareStockDataService extends AbstractTushareDataService i
 
     @Override
     public ApiResponse stockCompany(List<String> fields) throws TushareException{
-        ApiRequest apiRequest = new ApiRequest();
-        apiRequest.setApiName(TushareApiName.STOCK_COMPANY);
-        apiRequest.setToken(this.token);
 
-        if(fields != null){
-            apiRequest.setFields(fields);
-        }
-        ApiResponse apiResponse = tushareRequestClient.send(apiRequest, this.url);
+        ApiResponse apiResponse = query(TushareApiName.STOCK_COMPANY, null, fields);
 
         return apiResponse;
     }
@@ -125,9 +109,7 @@ public class DefaultTushareStockDataService extends AbstractTushareDataService i
 
     @Override
     public ApiResponse nameChange(String tsCode, Date startDate, Date endDate, List<String> fields) throws TushareException {
-        ApiRequest apiRequest = new ApiRequest();
-        apiRequest.setApiName(TushareApiName.NAME_CHANGE);
-        apiRequest.setToken(this.token);
+
         Map<String, String> params = new HashMap<>();
         if(tsCode != null){
             params.put(NameChangeFields.TS_CODE, tsCode);
@@ -142,11 +124,7 @@ public class DefaultTushareStockDataService extends AbstractTushareDataService i
         }
 
 
-        apiRequest.setParams(params);
-        if(fields != null){
-            apiRequest.setFields(fields);
-        }
-        ApiResponse apiResponse = tushareRequestClient.send(apiRequest, this.url);
+        ApiResponse apiResponse = query(TushareApiName.NAME_CHANGE, params, fields);
 
         return apiResponse;
     }
@@ -166,8 +144,7 @@ public class DefaultTushareStockDataService extends AbstractTushareDataService i
      */
     @Override
     public ApiResponse hsConst(HsType hsType, Boolean isNew, List<String> fields) throws TushareException {ApiRequest apiRequest = new ApiRequest();
-        apiRequest.setApiName(TushareApiName.HS_CONST);
-        apiRequest.setToken(this.token);
+
         Map<String, String> params = new HashMap<>();
         if(hsType != null){
             params.put(HsType.keyName, hsType.getValue());
@@ -177,11 +154,98 @@ public class DefaultTushareStockDataService extends AbstractTushareDataService i
             params.put("is_new", isNew ? "1" : "0");
         }
 
-        apiRequest.setParams(params);
-        if(fields != null){
-            apiRequest.setFields(fields);
+        ApiResponse apiResponse = query(TushareApiName.HS_CONST, params, fields);
+
+        return apiResponse;
+    }
+
+    @Override
+    public ApiResponse daily(String tsCode, Date tradeDate) throws TushareException {
+        return daily(tsCode, tradeDate, (List<String>) null);
+    }
+
+    @Override
+    public ApiResponse daily(String tsCode, Date tradeDate, List<String> fields) throws TushareException {
+
+        Map<String, String> params = new HashMap<>();
+        if(tsCode != null){
+            params.put(ProBarFields.TS_CODE, tsCode);
         }
-        ApiResponse apiResponse = tushareRequestClient.send(apiRequest, this.url);
+
+        if(tradeDate != null){
+            params.put(ProBarFields.TRADE_DATE, new SimpleDateFormat("yyyyMMdd").format(tradeDate));
+        }
+
+        ApiResponse apiResponse = query(TushareApiName.DAILY, params, fields);
+
+        return apiResponse;
+    }
+
+    @Override
+    public ApiResponse daily(String tsCode, Date startDate, Date endDate) throws TushareException {
+        return daily(tsCode, startDate, endDate, null);
+    }
+
+    @Override
+    public ApiResponse daily(String tsCode, Date startDate, Date endDate, List<String> fields) throws TushareException {Map<String, String> params = new HashMap<>();
+        if(tsCode != null){
+            params.put(ProBarFields.TS_CODE, tsCode);
+        }
+
+        if(startDate != null){
+            params.put(ProBarFields.START_DATE, new SimpleDateFormat("yyyyMMdd").format(startDate));
+        }
+
+        if(startDate != null){
+            params.put(ProBarFields.END_DATE, new SimpleDateFormat("yyyyMMdd").format(endDate));
+        }
+
+        ApiResponse apiResponse = query(TushareApiName.DAILY, params, fields);
+
+        return apiResponse;
+    }
+
+    @Override
+    public ApiResponse proBar(String tsCode, Date startDate, Date endDate, AssetType assetType, AdjType adjType, FreqType freqType, List<Integer> ma) throws TushareException {
+        return proBar(tsCode, startDate, endDate, assetType, adjType, freqType, ma, null);
+    }
+
+    @Override
+    public ApiResponse proBar(String tsCode, Date startDate, Date endDate, AssetType assetType, AdjType adjType, FreqType freqType, List<Integer> ma, List<String> fields) throws TushareException {
+
+
+
+        Map<String, String> params = new HashMap<>();
+        if(tsCode != null){
+            params.put(NameChangeFields.TS_CODE, tsCode);
+        }
+
+        if(startDate != null){
+            params.put(NameChangeFields.START_DATE, new SimpleDateFormat("yyyyMMdd").format(startDate));
+        }
+
+        if(endDate != null){
+            params.put(NameChangeFields.END_DATE, new SimpleDateFormat("yyyyMMdd").format(endDate));
+        }
+
+        if(assetType != null){
+            params.put(AssetType.keyName, assetType.getValue());
+        }
+
+        if(adjType != null){
+            params.put(AdjType.keyName, adjType.getValue());
+        }
+
+        if(freqType != null){
+            params.put(FreqType.keyName, freqType.getValue());
+        }
+
+        if(ma != null){
+            params.put("ma", JSONArray.toJSONString(ma));
+        }
+
+
+        ApiResponse apiResponse = query(TushareApiName.PRO_BAR, params, fields);
 
         return apiResponse;
     }

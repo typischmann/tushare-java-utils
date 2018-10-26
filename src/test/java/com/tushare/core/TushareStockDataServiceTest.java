@@ -1,6 +1,7 @@
 package com.tushare.core;
 
 import com.tushare.bean.ApiResponse;
+import com.tushare.constant.market.AssetType;
 import com.tushare.constant.stock.ExchangeId;
 import com.tushare.constant.stock.basic.IsHS;
 import com.tushare.constant.stock.basic.ListStatus;
@@ -13,6 +14,7 @@ import org.junit.Test;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.List;
 
 public class TushareStockDataServiceTest {
 
@@ -116,5 +118,73 @@ public class TushareStockDataServiceTest {
             }
             System.out.println(line.toString());
         }
+    }
+
+    @Test
+    public void proBarTest() throws TushareException, ParseException {
+        DefaultTushareStockDataService tushareStockDataService = new DefaultTushareStockDataService(token);
+        ApiResponse result = tushareStockDataService.proBar("600848.SH",
+                new SimpleDateFormat("yyyyMMdd").parse("20180101"),
+                new SimpleDateFormat("yyyyMMdd").parse("20181011"),AssetType.I,null, null, Arrays.asList(5, 20, 50));
+
+        StringBuilder fields = new StringBuilder();
+        for(String item : result.getFields()){
+            fields.append(item).append("   |   ");
+        }
+        System.out.println(fields.toString());
+
+        for(String[] items  : result.getItems()) {
+            StringBuilder line = new StringBuilder();
+            for(String item : items){
+                line.append(item).append("  |  ");
+            }
+            System.out.println(line.toString());
+        }
+    }
+
+    @Test
+    public void dailyTest() throws ParseException, TushareException {
+        DefaultTushareStockDataService tushareStockDataService = new DefaultTushareStockDataService(token);
+        ApiResponse result = tushareStockDataService.daily("000001.SZ",
+                new SimpleDateFormat("yyyyMMdd").parse("20180701"),
+                new SimpleDateFormat("yyyyMMdd").parse("20180718"));
+
+        StringBuilder fields = new StringBuilder();
+        for(String item : result.getFields()){
+            fields.append(item).append("   |   ");
+        }
+        System.out.println(fields.toString());
+
+        for(String[] items  : result.getItems()) {
+            StringBuilder line = new StringBuilder();
+            for(String item : items){
+                line.append(item).append("  |  ");
+            }
+            System.out.println(line.toString());
+        }
+
+    }
+
+    @Test
+    public void dailyTradeDateTest() throws ParseException, TushareException {
+        DefaultTushareStockDataService tushareStockDataService = new DefaultTushareStockDataService(token);
+        ApiResponse result = tushareStockDataService.daily("000001.SZ",
+                new SimpleDateFormat("yyyyMMdd").parse("20180702"),
+                (List<String>) null);
+
+        StringBuilder fields = new StringBuilder();
+        for(String item : result.getFields()){
+            fields.append(item).append("   |   ");
+        }
+        System.out.println(fields.toString());
+
+        for(String[] items  : result.getItems()) {
+            StringBuilder line = new StringBuilder();
+            for(String item : items){
+                line.append(item).append("  |  ");
+            }
+            System.out.println(line.toString());
+        }
+
     }
 }

@@ -1,6 +1,9 @@
 package com.tushare.core.api;
 
 import com.tushare.bean.ApiResponse;
+import com.tushare.constant.market.AdjType;
+import com.tushare.constant.market.AssetType;
+import com.tushare.constant.market.FreqType;
 import com.tushare.constant.stock.ExchangeId;
 import com.tushare.constant.stock.basic.IsHS;
 import com.tushare.constant.stock.basic.ListStatus;
@@ -108,4 +111,16 @@ public interface TushareStockDataService {
      * @throws TushareException
      */
     ApiResponse hsConst(HsType hsType, Boolean isNew, List<String> fields)throws TushareException;
+
+    ApiResponse daily(String tsCode, Date tradeDate) throws TushareException;
+
+    ApiResponse daily(String tsCode, Date tradeDate, List<String> fields) throws TushareException;
+
+    ApiResponse daily(String tsCode, Date startDate, Date endDate) throws TushareException;
+
+    ApiResponse daily(String tsCode, Date startDate, Date endDate, List<String> fields) throws TushareException;
+
+    ApiResponse proBar(String tsCode, Date startDate, Date endDate, AssetType assetType, AdjType adjType, FreqType freqType, List<Integer> ma) throws TushareException;
+
+    ApiResponse proBar(String tsCode, Date startDate, Date endDate, AssetType assetType, AdjType adjType, FreqType freqType, List<Integer> ma, List<String> fields) throws TushareException;
 }
