@@ -7,9 +7,12 @@ DefaultTushareStockDataService tushareStockDataService = new DefaultTushareStock
 类似tushare pro的python里实现的接口
 
 tushareStockDataService.XXXX(param1,param2,....);（XXXX为apiName）
+
 或者
+
 tushareStockDataService.query(String apiName, Map<String, String> params, List<String> fields);
   
-返回为
+返回为:
+
 com.tushare.bean.ApiResponse
  
