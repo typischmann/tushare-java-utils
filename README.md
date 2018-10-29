@@ -15,4 +15,6 @@ tushareStockDataService.query(String apiName, Map<String, String> params, List<S
 返回为:
 
 com.tushare.bean.ApiResponse
+
+具体可以参考 src/test/java/com/tushare/core/TushareStockDataServiceTest.java 里的测试用例代码
  
