@@ -123,4 +123,8 @@ public interface TushareStockDataService {
     ApiResponse proBar(String tsCode, Date startDate, Date endDate, AssetType assetType, AdjType adjType, FreqType freqType, List<Integer> ma) throws TushareException;
 
     ApiResponse proBar(String tsCode, Date startDate, Date endDate, AssetType assetType, AdjType adjType, FreqType freqType, List<Integer> ma, List<String> fields) throws TushareException;
+
+    ApiResponse adjFactor(String tsCode, Date tradeDate, Date startDate, Date endDate) throws TushareException;
+
+    ApiResponse adjFactor(String tsCode, Date tradeDate, Date startDate, Date endDate, List<String> fields) throws TushareException;
 }

@@ -187,4 +187,26 @@ public class TushareStockDataServiceTest {
         }
 
     }
+
+    @Test
+    public void adjFactorTest() throws TushareException, ParseException {
+
+        DefaultTushareStockDataService tushareStockDataService = new DefaultTushareStockDataService(token);
+        ApiResponse result = tushareStockDataService.adjFactor("000001.SZ",null, null, null);
+
+        StringBuilder fields = new StringBuilder();
+        for(String item : result.getFields()){
+            fields.append(item).append("   |   ");
+        }
+        System.out.println(fields.toString());
+
+        for(String[] items  : result.getItems()) {
+            StringBuilder line = new StringBuilder();
+            for(String item : items){
+                line.append(item).append("  |  ");
+            }
+            System.out.println(line.toString());
+        }
+
+    }
 }

@@ -4,10 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.tushare.bean.ApiRequest;
 import com.tushare.bean.ApiResponse;
 import com.tushare.constant.TushareApiName;
-import com.tushare.constant.market.AdjType;
-import com.tushare.constant.market.AssetType;
-import com.tushare.constant.market.FreqType;
-import com.tushare.constant.market.ProBarFields;
+import com.tushare.constant.market.*;
 import com.tushare.constant.stock.ExchangeId;
 import com.tushare.constant.stock.basic.IsHS;
 import com.tushare.constant.stock.basic.ListStatus;
@@ -246,6 +243,37 @@ public class DefaultTushareStockDataService extends AbstractTushareDataService i
 
 
         ApiResponse apiResponse = query(TushareApiName.PRO_BAR, params, fields);
+
+        return apiResponse;
+    }
+
+    @Override
+    public ApiResponse adjFactor(String tsCode, Date tradeDate, Date startDate, Date endDate) throws TushareException {
+        return adjFactor(tsCode, tradeDate, startDate, endDate, null);
+    }
+
+    @Override
+    public ApiResponse adjFactor(String tsCode, Date tradeDate, Date startDate, Date endDate, List<String> fields) throws TushareException {
+        Map<String, String> params = new HashMap<>();
+
+        if(tsCode != null){
+            params.put(AdjFactorFields.TS_CODE, tsCode);
+        }
+
+
+        if(tradeDate != null){
+            params.put(AdjFactorFields.TRADE_DATE, new SimpleDateFormat("yyyyMMdd").format(tradeDate));
+        }
+
+        if(startDate != null){
+            params.put(AdjFactorFields.START_DATE, new SimpleDateFormat("yyyyMMdd").format(startDate));
+        }
+
+        if(endDate != null){
+            params.put(AdjFactorFields.END_DATE, new SimpleDateFormat("yyyyMMdd").format(endDate));
+        }
+
+        ApiResponse apiResponse = query(TushareApiName.ADJ_FACTOR, params, fields);
 
         return apiResponse;
     }
