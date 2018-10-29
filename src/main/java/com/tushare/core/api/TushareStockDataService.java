@@ -127,4 +127,8 @@ public interface TushareStockDataService {
     ApiResponse adjFactor(String tsCode, Date tradeDate, Date startDate, Date endDate) throws TushareException;
 
     ApiResponse adjFactor(String tsCode, Date tradeDate, Date startDate, Date endDate, List<String> fields) throws TushareException;
+
+    ApiResponse suspend(String tsCode, Date suspendDate, Date resumeDate) throws TushareException;
+
+    ApiResponse suspend(String tsCode, Date suspendDate, Date resumeDate, List<String> fields) throws TushareException;
 }

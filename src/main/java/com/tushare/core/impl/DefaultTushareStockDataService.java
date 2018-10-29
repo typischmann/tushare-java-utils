@@ -277,4 +277,48 @@ public class DefaultTushareStockDataService extends AbstractTushareDataService i
 
         return apiResponse;
     }
+
+    /**
+     * {@inheritDoc}
+     * @param tsCode
+     * @param suspendDate
+     * @param resumeDate
+     * @return
+     * @throws TushareException
+     */
+    @Override
+    public ApiResponse suspend(String tsCode, Date suspendDate, Date resumeDate) throws TushareException {
+        return suspend(tsCode, suspendDate, resumeDate, null);
+    }
+
+    /**
+     * {@inheritDoc}
+     * @param tsCode
+     * @param suspendDate
+     * @param resumeDate
+     * @param fields
+     * @return
+     * @throws TushareException
+     */
+    @Override
+    public ApiResponse suspend(String tsCode, Date suspendDate, Date resumeDate, List<String> fields) throws TushareException {
+        Map<String, String> params = new HashMap<>();
+
+        if(tsCode != null){
+            params.put(SuspendFields.TS_CODE, tsCode);
+        }
+
+
+        if(suspendDate != null){
+            params.put(SuspendFields.SUSPEND_DATE, new SimpleDateFormat("yyyyMMdd").format(suspendDate));
+        }
+
+        if(resumeDate != null){
+            params.put(SuspendFields.RESUME_DATE, new SimpleDateFormat("yyyyMMdd").format(resumeDate));
+        }
+
+        ApiResponse apiResponse = query(TushareApiName.SUSPEND, params, fields);
+
+        return apiResponse;
+    }
 }
