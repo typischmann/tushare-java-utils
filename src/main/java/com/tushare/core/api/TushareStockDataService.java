@@ -154,4 +154,29 @@ public interface TushareStockDataService {
      * @throws TushareException
      */
     ApiResponse dailyBasic(String tsCode, Date tradeDate, Date startDate, Date endDate, List<String> fields) throws TushareException;
+
+
+    /**
+     *
+     * @param tsCode
+     * @param annDate
+     * @param recordDate
+     * @param exDate
+     * @return
+     * @throws TushareException
+     */
+    ApiResponse dividend(String tsCode, Date annDate, Date recordDate, Date exDate) throws TushareException;
+
+
+    /**
+     *
+     * @param tsCode
+     * @param annDate
+     * @param recordDate
+     * @param exDate
+     * @param fields
+     * @return
+     * @throws TushareException
+     */
+    ApiResponse dividend(String tsCode, Date annDate, Date recordDate, Date exDate, List<String> fields) throws TushareException;
 }

@@ -1,6 +1,7 @@
 package com.tushare.core;
 
 import com.tushare.bean.ApiResponse;
+import com.tushare.constant.finance.DividendFields;
 import com.tushare.constant.market.AssetType;
 import com.tushare.constant.stock.ExchangeId;
 import com.tushare.constant.stock.basic.IsHS;
@@ -234,6 +235,32 @@ public class TushareStockDataServiceTest {
     public void dailyBasicTest() throws TushareException, ParseException{
         DefaultTushareStockDataService tushareStockDataService = new DefaultTushareStockDataService(token);
         ApiResponse result = tushareStockDataService.dailyBasic(null, new SimpleDateFormat("yyyyMMdd").parse("20180726"), null, null);
+
+        StringBuilder fields = new StringBuilder();
+        for(String item : result.getFields()){
+            fields.append(item).append("   |   ");
+        }
+        System.out.println(fields.toString());
+
+        for(String[] items  : result.getItems()) {
+            StringBuilder line = new StringBuilder();
+            for(String item : items){
+                line.append(item).append("  |  ");
+            }
+            System.out.println(line.toString());
+        }
+
+    }
+
+
+    @Test
+    public void dividendTest() throws TushareException, ParseException{
+
+        List<String> fieldArray = Arrays.asList(DividendFields.TS_CODE, DividendFields.DIV_PROC, DividendFields.STK_DIV,
+                DividendFields.RECORD_DATE, DividendFields.EX_DATE);
+
+        DefaultTushareStockDataService tushareStockDataService = new DefaultTushareStockDataService(token);
+        ApiResponse result = tushareStockDataService.dividend("600848.SH", null, null, null, fieldArray);
 
         StringBuilder fields = new StringBuilder();
         for(String item : result.getFields()){

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.tushare.bean.ApiRequest;
 import com.tushare.bean.ApiResponse;
 import com.tushare.constant.TushareApiName;
+import com.tushare.constant.finance.DividendFields;
 import com.tushare.constant.market.*;
 import com.tushare.constant.stock.ExchangeId;
 import com.tushare.constant.stock.basic.IsHS;
@@ -368,6 +369,57 @@ public class DefaultTushareStockDataService extends AbstractTushareDataService i
         }
 
         ApiResponse apiResponse = query(TushareApiName.DAILY_BASIC, params, fields);
+
+        return apiResponse;
+    }
+
+    /**
+     * {@inheritDoc}
+     * @param tsCode
+     * @param annDate
+     * @param recordDate
+     * @param exDate
+     * @return
+     * @throws TushareException
+     */
+    @Override
+    public ApiResponse dividend(String tsCode, Date annDate, Date recordDate, Date exDate) throws TushareException {
+        return dividend(tsCode, annDate, recordDate, exDate, null);
+    }
+
+
+    /**
+     * {@inheritDoc}
+     * @param tsCode
+     * @param annDate
+     * @param recordDate
+     * @param exDate
+     * @param fields
+     * @return
+     * @throws TushareException
+     */
+    @Override
+    public ApiResponse dividend(String tsCode, Date annDate, Date recordDate, Date exDate, List<String> fields) throws TushareException {
+        Map<String, String> params = new HashMap<>();
+
+        if(tsCode != null){
+            params.put(DividendFields.TS_CODE, tsCode);
+        }
+
+
+        if(annDate != null){
+            params.put(DividendFields.ANN_DATE, new SimpleDateFormat("yyyyMMdd").format(annDate));
+        }
+
+        if(recordDate != null){
+            params.put(DividendFields.RECORD_DATE, new SimpleDateFormat("yyyyMMdd").format(recordDate));
+        }
+
+        if(exDate != null){
+            params.put(DividendFields.END_DATE, new SimpleDateFormat("yyyyMMdd").format(exDate));
+        }
+
+        ApiResponse apiResponse = query(TushareApiName.DIVIDEND, params, fields);
 
         return apiResponse;
     }
