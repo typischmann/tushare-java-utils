@@ -321,4 +321,54 @@ public class DefaultTushareStockDataService extends AbstractTushareDataService i
 
         return apiResponse;
     }
+
+    /**
+     * {@inheritDoc}
+     * @param tsCode
+     * @param tradeDate
+     * @param startDate
+     * @param endDate
+     * @return
+     * @throws TushareException
+     */
+    @Override
+    public ApiResponse dailyBasic(String tsCode, Date tradeDate, Date startDate, Date endDate) throws TushareException {
+        return dailyBasic(tsCode, tradeDate, startDate, endDate, null);
+    }
+
+    /**
+     * {@inheritDoc}
+     * @param tsCode
+     * @param tradeDate
+     * @param startDate
+     * @param endDate
+     * @param fields
+     * @return
+     * @throws TushareException
+     */
+    @Override
+    public ApiResponse dailyBasic(String tsCode, Date tradeDate, Date startDate, Date endDate, List<String> fields) throws TushareException {
+        Map<String, String> params = new HashMap<>();
+
+        if(tsCode != null){
+            params.put(DailyBasicFields.TS_CODE, tsCode);
+        }
+
+
+        if(tradeDate != null){
+            params.put(DailyBasicFields.TRADE_DATE, new SimpleDateFormat("yyyyMMdd").format(tradeDate));
+        }
+
+        if(startDate != null){
+            params.put(DailyBasicFields.START_DATE, new SimpleDateFormat("yyyyMMdd").format(startDate));
+        }
+
+        if(endDate != null){
+            params.put(DailyBasicFields.END_DATE, new SimpleDateFormat("yyyyMMdd").format(endDate));
+        }
+
+        ApiResponse apiResponse = query(TushareApiName.DAILY_BASIC, params, fields);
+
+        return apiResponse;
+    }
 }

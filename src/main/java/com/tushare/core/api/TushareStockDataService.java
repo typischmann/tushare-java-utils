@@ -131,4 +131,27 @@ public interface TushareStockDataService {
     ApiResponse suspend(String tsCode, Date suspendDate, Date resumeDate) throws TushareException;
 
     ApiResponse suspend(String tsCode, Date suspendDate, Date resumeDate, List<String> fields) throws TushareException;
+
+    /**
+     *
+     * @param tsCode
+     * @param tradeDate
+     * @param startDate
+     * @param endDate
+     * @return
+     * @throws TushareException
+     */
+    ApiResponse dailyBasic(String tsCode, Date tradeDate, Date startDate, Date endDate) throws TushareException;
+
+    /**
+     *
+     * @param tsCode
+     * @param tradeDate
+     * @param startDate
+     * @param endDate
+     * @param fields
+     * @return
+     * @throws TushareException
+     */
+    ApiResponse dailyBasic(String tsCode, Date tradeDate, Date startDate, Date endDate, List<String> fields) throws TushareException;
 }

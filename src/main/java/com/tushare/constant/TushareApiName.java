@@ -9,5 +9,6 @@ public class TushareApiName {
     public static final String DAILY = "daily";
     public static final String ADJ_FACTOR = "adj_factor";
     public static final String SUSPEND = "suspend";
+    public static final String DAILY_BASIC = "daily_basic";
     public static final String PRO_BAR = "pro_bar";
 }
