@@ -1,6 +1,8 @@
 package com.tushare.core.api;
 
 import com.tushare.bean.ApiResponse;
+import com.tushare.constant.finance.CompType;
+import com.tushare.constant.finance.ReportType;
 import com.tushare.constant.market.AdjType;
 import com.tushare.constant.market.AssetType;
 import com.tushare.constant.market.FreqType;
@@ -179,4 +181,33 @@ public interface TushareStockDataService {
      * @throws TushareException
      */
     ApiResponse dividend(String tsCode, Date annDate, Date recordDate, Date exDate, List<String> fields) throws TushareException;
+
+    /**
+     *
+     * @param tsCode
+     * @param annDate
+     * @param startDate
+     * @param endDate
+     * @param period
+     * @param reportType
+     * @param compType
+     * @return
+     * @throws TushareException
+     */
+    ApiResponse income(String tsCode, Date annDate, Date startDate, Date endDate, Date period, ReportType reportType, CompType compType) throws TushareException;
+
+    /**
+     *
+     * @param tsCode
+     * @param annDate
+     * @param startDate
+     * @param endDate
+     * @param period
+     * @param reportType
+     * @param compType
+     * @param fields
+     * @return
+     * @throws TushareException
+     */
+    ApiResponse income(String tsCode, Date annDate, Date startDate, Date endDate, Date period, ReportType reportType, CompType compType, List<String> fields) throws TushareException;
 }

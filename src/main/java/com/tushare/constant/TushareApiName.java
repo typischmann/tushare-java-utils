@@ -12,5 +12,6 @@ public class TushareApiName {
     public static final String DAILY_BASIC = "daily_basic";
     public static final String PRO_BAR = "pro_bar";
 
+    public static final String INCOME = "income";
     public static final String DIVIDEND = "dividend";
 }

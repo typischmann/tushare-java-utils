@@ -4,7 +4,10 @@ import com.alibaba.fastjson.JSONArray;
 import com.tushare.bean.ApiRequest;
 import com.tushare.bean.ApiResponse;
 import com.tushare.constant.TushareApiName;
+import com.tushare.constant.finance.CompType;
 import com.tushare.constant.finance.DividendFields;
+import com.tushare.constant.finance.IncomeFields;
+import com.tushare.constant.finance.ReportType;
 import com.tushare.constant.market.*;
 import com.tushare.constant.stock.ExchangeId;
 import com.tushare.constant.stock.basic.IsHS;
@@ -420,6 +423,49 @@ public class DefaultTushareStockDataService extends AbstractTushareDataService i
         }
 
         ApiResponse apiResponse = query(TushareApiName.DIVIDEND, params, fields);
+
+        return apiResponse;
+    }
+
+    @Override
+    public ApiResponse income(String tsCode, Date annDate, Date startDate, Date endDate, Date period, ReportType reportType, CompType compType) throws TushareException {
+        return income(tsCode,annDate,startDate,endDate,period,reportType,compType, null);
+    }
+
+    @Override
+    public ApiResponse income(String tsCode, Date annDate, Date startDate, Date endDate, Date period, ReportType reportType, CompType compType, List<String> fields) throws TushareException {
+        Map<String, String> params = new HashMap<>();
+
+        if(tsCode != null){
+            params.put(IncomeFields.TS_CODE, tsCode);
+        }
+
+
+        if(annDate != null){
+            params.put(IncomeFields.ANN_DATE, new SimpleDateFormat("yyyyMMdd").format(annDate));
+        }
+
+        if(startDate != null){
+            params.put(IncomeFields.START_DATE, new SimpleDateFormat("yyyyMMdd").format(startDate));
+        }
+
+        if(endDate != null){
+            params.put(IncomeFields.END_DATE, new SimpleDateFormat("yyyyMMdd").format(endDate));
+        }
+
+        if(period != null){
+            params.put(IncomeFields.PERIOD, new SimpleDateFormat("yyyyMMdd").format(period));
+        }
+
+        if(reportType != null){
+            params.put(ReportType.keyName, reportType.getValue());
+        }
+
+        if(compType != null){
+            params.put(CompType.keyName, compType.getValue());
+        }
+
+        ApiResponse apiResponse = query(TushareApiName.INCOME, params, fields);
 
         return apiResponse;
     }
