@@ -1,6 +1,6 @@
-# tushare-java-utils
+# com.tushare-java-utils
 
-tushare pro的java工具包 tushare相关参考https://tushare.pro/
+com.tushare pro的java工具包 tushare相关参考https://com.tushare.pro/
 
 DefaultTushareStockDataService tushareStockDataService = new DefaultTushareStockDataService(token);
 
@@ -14,7 +14,7 @@ tushareStockDataService.query(String apiName, Map<String, String> params, List<S
   
 返回为:
 
-com.tushare.bean.ApiResponse
+com.com.tushare.bean.ApiResponse
 
-具体可以参考 src/test/java/com/tushare/core/TushareStockDataServiceTest.java 里的测试用例代码
+具体可以参考 src/test/java/com/com.tushare/core/TushareStockDataServiceTest.java 里的测试用例代码
  

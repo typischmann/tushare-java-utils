@@ -14,4 +14,8 @@ public class TushareApiName {
 
     public static final String INCOME = "income";
     public static final String DIVIDEND = "dividend";
+
+
+    public static final String CONCEPT = "concept";
+    public static final String CONCEPT_DETAIL = "concept_detail";
 }

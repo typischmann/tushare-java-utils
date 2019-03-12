@@ -9,6 +9,7 @@ import com.tushare.constant.finance.DividendFields;
 import com.tushare.constant.finance.IncomeFields;
 import com.tushare.constant.finance.ReportType;
 import com.tushare.constant.market.*;
+import com.tushare.constant.reference.ConceptFields;
 import com.tushare.constant.stock.ExchangeId;
 import com.tushare.constant.stock.basic.IsHS;
 import com.tushare.constant.stock.basic.ListStatus;
@@ -468,5 +469,24 @@ public class DefaultTushareStockDataService extends AbstractTushareDataService i
         ApiResponse apiResponse = query(TushareApiName.INCOME, params, fields);
 
         return apiResponse;
+    }
+
+    @Override
+    public ApiResponse concept() throws TushareException {
+        ApiResponse apiResponse = query(TushareApiName.CONCEPT, null, null);
+        return apiResponse;
+    }
+
+    @Override
+    public ApiResponse conceptDetail(String id) throws TushareException {
+
+        Map<String, String> params = new HashMap<>();
+
+        if(id != null){
+            params.put(ConceptFields.ID, id);
+        }
+
+        ApiResponse apiResponse = query(TushareApiName.CONCEPT_DETAIL,params,null);
+        return null;
     }
 }

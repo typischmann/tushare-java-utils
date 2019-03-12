@@ -98,7 +98,7 @@ public class WebHttpClient {
     private static void setSslContext(){
         try {
             TrustManager[] trustAllCerts = new TrustManager[]{new X509TrustManager() {
-                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                public X509Certificate[] getAcceptedIssuers() {
                     return null;
                 }
 

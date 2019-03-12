@@ -210,4 +210,8 @@ public interface TushareStockDataService {
      * @throws TushareException
      */
     ApiResponse income(String tsCode, Date annDate, Date startDate, Date endDate, Date period, ReportType reportType, CompType compType, List<String> fields) throws TushareException;
+
+    ApiResponse concept() throws  TushareException;
+
+    ApiResponse conceptDetail(String id) throws TushareException;
 }
