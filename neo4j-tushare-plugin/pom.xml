@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>com.tushare</groupId>
-    <artifactId>neo4j-com.tushare-plugin</artifactId>
+    <artifactId>neo4j-tushare-plugin</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
