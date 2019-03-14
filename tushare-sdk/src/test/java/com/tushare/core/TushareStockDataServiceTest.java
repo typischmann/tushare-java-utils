@@ -277,4 +277,24 @@ public class TushareStockDataServiceTest {
         }
 
     }
+
+    @Test
+    public void conceptTest() throws TushareException{
+        DefaultTushareStockDataService tushareStockDataService = new DefaultTushareStockDataService(token);
+        ApiResponse response = tushareStockDataService.concept();
+
+        StringBuilder fields = new StringBuilder();
+        for(String item : response.getFields()){
+            fields.append(item).append("   |   ");
+        }
+        System.out.println(fields.toString());
+
+        for(String[] items  : response.getItems()) {
+            StringBuilder line = new StringBuilder();
+            for(String item : items){
+                line.append(item).append("  |  ");
+            }
+            System.out.println(line.toString());
+        }
+    }
 }
