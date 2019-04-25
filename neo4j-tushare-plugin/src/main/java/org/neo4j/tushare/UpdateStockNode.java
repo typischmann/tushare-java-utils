@@ -6,12 +6,12 @@ import com.tushare.constant.stock.basic.StockBasicFields;
 import com.tushare.core.api.TushareStockDataService;
 import com.tushare.core.impl.DefaultTushareStockDataService;
 import com.tushare.exception.TushareException;
-import org.neo4j.graphdb.GraphDatabaseService;
-import org.neo4j.graphdb.Label;
-import org.neo4j.graphdb.Transaction;
+import org.neo4j.graphdb.*;
 import org.neo4j.logging.Log;
 import org.neo4j.procedure.Context;
+import org.neo4j.procedure.Description;
 import org.neo4j.procedure.Procedure;
+import org.neo4j.tushare.constant.LabelType;
 
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +51,7 @@ public class UpdateStockNode {
 
             for(String[] item: items){
                 String tsCode = item[fieldMap.get(StockBasicFields.TS_CODE)];
+                String name = item[fieldMap.get(StockBasicFields.NAME)];
             }
             transaction.success();
         } catch (TushareException e) {
@@ -60,6 +61,7 @@ public class UpdateStockNode {
     }
 
     @Procedure(value = "tushare.createAndUpdateConceptNodes")
+    @Description("creation and update of the concept nodes")
     public void createAndUpdateConceptNodes(){
         TushareStockDataService tushareStockDataService = new DefaultTushareStockDataService(token);
         try (Transaction transaction = db.beginTx()){
@@ -76,6 +78,25 @@ public class UpdateStockNode {
 
             for(String[] item: items){
                 String code = item[fieldMap.get(ConceptFields.CODE)];
+                String name = item[fieldMap.get(ConceptFields.NAME)];
+                ResourceIterator iterator=db.findNodes(LabelType.CONCEPT.getLabel(), "code", code, "name", name);
+                Node node = (Node)iterator.next();
+                if(node==null){
+                    node = db.createNode(LabelType.CONCEPT.getLabel());
+                    node.setProperty("code", code);
+                    node.setProperty("name", name);
+                }else{
+                    boolean isConcept = false;
+                    for(Label label : node.getLabels()){
+                        if(label.equals(LabelType.CONCEPT.getLabel())){
+                            isConcept = true;
+                        }
+                    }
+
+                    if(!isConcept){
+                        node.addLabel(LabelType.CONCEPT.getLabel());
+                    }
+                }
             }
             transaction.success();
         } catch (TushareException e) {
