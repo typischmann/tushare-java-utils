@@ -214,4 +214,13 @@ public interface TushareStockDataService {
     ApiResponse concept() throws  TushareException;
 
     ApiResponse conceptDetail(String id) throws TushareException;
+
+    ApiResponse shibor(Date startDate, Date endDate) throws TushareException;
+
+    ApiResponse shibor(Date startDate, Date endDate, List<String>fields) throws TushareException;
+
+    ApiResponse indexDailybasic(String tsCode, Date tradeDate, Date startDate, Date endDate) throws TushareException;
+
+    ApiResponse indexDailybasic(String tsCode, Date tradeDate, Date startDate, Date endDate, List<String> fields) throws TushareException;
+
 }

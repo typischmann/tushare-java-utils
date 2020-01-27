@@ -18,4 +18,8 @@ public class TushareApiName {
 
     public static final String CONCEPT = "concept";
     public static final String CONCEPT_DETAIL = "concept_detail";
+
+    public static final String SHIBOR = "shibor";
+
+    public static final String INDEX_DAILY_BASIC= "index_dailybasic";
 }

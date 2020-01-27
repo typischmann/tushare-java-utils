@@ -10,12 +10,16 @@ import com.tushare.constant.stock.calender.TradeCalenderFields;
 import com.tushare.constant.stock.hsconst.HsType;
 import com.tushare.core.impl.DefaultTushareStockDataService;
 import com.tushare.exception.TushareException;
+import joinery.DataFrame;
 import org.junit.Test;
 
+import javax.xml.crypto.Data;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.Set;
 
 public class TushareStockDataServiceTest {
 
@@ -25,20 +29,37 @@ public class TushareStockDataServiceTest {
     public void stockBasicTest() throws TushareException {
         DefaultTushareStockDataService tushareStockDataService = new DefaultTushareStockDataService(token);
         ApiResponse result = tushareStockDataService.stockBasic(IsHS.H, ListStatus.L, ExchangeId.SSE);
+        DataFrame dataFrame = result.getDataFrame();
+        //dataFrame.resetIndex();
+
+        System.out.println("DataFrame begin:");
         StringBuilder fields = new StringBuilder();
-        for(String item : result.getFields()){
-            fields.append(item).append("   |   ");
+        for(String field : (Set<String>)dataFrame.columns()){
+            fields.append(field).append("   |   ");
         }
         System.out.println(fields.toString());
 
-        for(String[] items  : result.getItems()) {
+        ListIterator<List<String>> listIterator = dataFrame.iterrows();
+        while (listIterator.hasNext()){
             StringBuilder line = new StringBuilder();
+            List<String> items = listIterator.next();
             for(String item : items){
                 line.append(item).append("  |  ");
             }
             System.out.println(line.toString());
         }
 
+        System.out.println("DataFrame end");
+        for(Object type : dataFrame.types()){
+            System.out.println(type.toString());
+        }
+
+        dataFrame.convert();
+
+        System.out.println("after type conversion");
+        for(Object type : dataFrame.types()){
+            System.out.println(type.toString());
+        }
     }
 
     @Test
@@ -297,4 +318,5 @@ public class TushareStockDataServiceTest {
             System.out.println(line.toString());
         }
     }
+
 }

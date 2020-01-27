@@ -1,5 +1,10 @@
 package com.tushare.bean;
 
+import joinery.DataFrame;
+
+import java.awt.dnd.DropTarget;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -45,6 +50,14 @@ public class ApiResponse {
 
     public void setItems(List<String[]> items) {
         this.items = items;
+    }
+
+    public DataFrame getDataFrame(){
+        DataFrame dataFrame = new DataFrame((Collection)fields);
+        for(String [] row : items){
+            dataFrame.append(Arrays.asList(row));
+        }
+        return  dataFrame;
     }
 
 }

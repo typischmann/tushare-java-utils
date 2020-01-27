@@ -8,6 +8,8 @@ import com.tushare.constant.finance.CompType;
 import com.tushare.constant.finance.DividendFields;
 import com.tushare.constant.finance.IncomeFields;
 import com.tushare.constant.finance.ReportType;
+import com.tushare.constant.index.IndexDailyBasic;
+import com.tushare.constant.interest.IntrestRateFields;
 import com.tushare.constant.market.*;
 import com.tushare.constant.reference.ConceptFields;
 import com.tushare.constant.stock.ExchangeId;
@@ -488,5 +490,58 @@ public class DefaultTushareStockDataService extends AbstractTushareDataService i
 
         ApiResponse apiResponse = query(TushareApiName.CONCEPT_DETAIL,params,null);
         return null;
+    }
+
+
+    @Override
+    public ApiResponse shibor(Date startDate, Date endDate) throws TushareException{
+        return shibor(startDate, endDate, null);
+    }
+
+    @Override
+    public ApiResponse shibor(Date startDate, Date endDate, List<String> fields) throws TushareException {
+        Map<String, String> params = new HashMap<>();
+
+        if(startDate != null){
+            params.put(IntrestRateFields.START_DATE, new SimpleDateFormat("yyyyMMdd").format(startDate));
+        }
+
+        if(endDate != null){
+            params.put(IntrestRateFields.END_DATE, new SimpleDateFormat("yyyyMMdd").format(endDate));
+        }
+
+        ApiResponse apiResponse = query(TushareApiName.SHIBOR, params, fields);
+        return apiResponse;
+    }
+
+    @Override
+    public ApiResponse indexDailybasic(String tsCode, Date tradeDate, Date startDate, Date endDate) throws TushareException {
+        return indexDailybasic(tsCode, tradeDate, startDate, endDate,null);
+    }
+
+    @Override
+    public ApiResponse indexDailybasic(String tsCode, Date tradeDate, Date startDate, Date endDate, List<String> fields) throws TushareException {
+        Map<String, String> params = new HashMap<>();
+
+        if(tsCode != null){
+            params.put(IndexDailyBasic.TS_CODE, tsCode);
+        }
+
+
+        if(tradeDate != null){
+            params.put(IndexDailyBasic.TRADE_DATE, new SimpleDateFormat("yyyyMMdd").format(tradeDate));
+        }
+
+        if(startDate != null){
+            params.put(IndexDailyBasic.START_DATE, new SimpleDateFormat("yyyyMMdd").format(startDate));
+        }
+
+        if(endDate != null){
+            params.put(IndexDailyBasic.END_DATE, new SimpleDateFormat("yyyyMMdd").format(endDate));
+        }
+
+        ApiResponse apiResponse = query(TushareApiName.INDEX_DAILY_BASIC, params, fields);
+
+        return apiResponse;
     }
 }

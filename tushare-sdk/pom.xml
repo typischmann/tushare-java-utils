@@ -11,5 +11,14 @@
 
     <artifactId>tushare-sdk</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>joinery</groupId>
+            <artifactId>joinery-dataframe</artifactId>
+            <version>1.9</version>
+        </dependency>
+    </dependencies>
+
+
 
 </project>
