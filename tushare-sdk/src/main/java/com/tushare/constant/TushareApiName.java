@@ -21,5 +21,6 @@ public class TushareApiName {
 
     public static final String SHIBOR = "shibor";
 
+    public static final String INDEX_DAILY = "index_daily";
     public static final String INDEX_DAILY_BASIC= "index_dailybasic";
 }

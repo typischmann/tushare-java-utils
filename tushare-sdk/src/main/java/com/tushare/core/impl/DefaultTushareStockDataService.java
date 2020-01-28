@@ -8,6 +8,7 @@ import com.tushare.constant.finance.CompType;
 import com.tushare.constant.finance.DividendFields;
 import com.tushare.constant.finance.IncomeFields;
 import com.tushare.constant.finance.ReportType;
+import com.tushare.constant.index.IndexDaily;
 import com.tushare.constant.index.IndexDailyBasic;
 import com.tushare.constant.interest.IntrestRateFields;
 import com.tushare.constant.market.*;
@@ -511,6 +512,31 @@ public class DefaultTushareStockDataService extends AbstractTushareDataService i
         }
 
         ApiResponse apiResponse = query(TushareApiName.SHIBOR, params, fields);
+        return apiResponse;
+    }
+
+    @Override
+    public ApiResponse indexDaily(String tsCode, Date startDate, Date endDate) throws TushareException {
+        return indexDaily(tsCode, startDate, endDate, null);
+    }
+
+    @Override
+    public ApiResponse indexDaily(String tsCode, Date startDate, Date endDate, List<String> fields) throws TushareException {
+        Map<String, String> params = new HashMap<>();
+        if(tsCode != null){
+            params.put(IndexDaily.TS_CODE, tsCode);
+        }
+
+        if(startDate != null){
+            params.put(IndexDaily.START_DATE, new SimpleDateFormat("yyyyMMdd").format(startDate));
+        }
+
+        if(startDate != null){
+            params.put(IndexDaily.END_DATE, new SimpleDateFormat("yyyyMMdd").format(endDate));
+        }
+
+        ApiResponse apiResponse = query(TushareApiName.INDEX_DAILY, params, fields);
+
         return apiResponse;
     }
 

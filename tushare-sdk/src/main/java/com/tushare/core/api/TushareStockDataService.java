@@ -219,6 +219,10 @@ public interface TushareStockDataService {
 
     ApiResponse shibor(Date startDate, Date endDate, List<String>fields) throws TushareException;
 
+    ApiResponse indexDaily(String tsCode, Date startDate, Date endDate) throws TushareException;
+
+    ApiResponse indexDaily(String tsCode, Date startDate, Date endDate, List<String> fields) throws TushareException;
+
     ApiResponse indexDailybasic(String tsCode, Date tradeDate, Date startDate, Date endDate) throws TushareException;
 
     ApiResponse indexDailybasic(String tsCode, Date tradeDate, Date startDate, Date endDate, List<String> fields) throws TushareException;
