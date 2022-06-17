@@ -19,7 +19,7 @@
         <apache.commons.lang.version>3.8.1</apache.commons.lang.version>
         <log4j2.core.version>2.11.1</log4j2.core.version>
         <log4j2.api.version>2.11.1</log4j2.api.version>
-        <fastjson.version>1.2.51</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <junit.version>4.12</junit.version>
     </properties>
 
